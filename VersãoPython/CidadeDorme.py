@@ -85,7 +85,7 @@ while True:
                             print('voce é o traidor e o assassino ainda está vivo, disfarce por um tempo e digite "passar" para terminar seu turno: ')
                         elif(assassinoVivo == False):
                             input(f'vez de {jogadores[jogadorTurno]}, digite "ok" para começar seu turno: ')
-                            input('você agora é o assassino, quem você quer matar? ')
+                            escolhaAssassino = input('você agora é o assassino, quem você quer matar? ')
             #programação dia (jogadores votam)
             print('a cidade acorda.')
             if(escolhaAnjo == escolhaAssassino):
