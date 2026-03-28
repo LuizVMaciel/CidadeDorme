@@ -34,6 +34,9 @@ while True:
             assassinos.append(traidor)
             traidorNaPartida = True
             assassinoVivo = True
+            partidaComecaComTraidor = True
+        elif(len(jogadores) < 4):
+            partidaComecaComTraidor = False
         print('classes atribuídas!')
         #programação das rodadas
         while((len(jogadoresExcetoAssassinos) > len(assassinos)) and (len(assassinos) > 0)):
@@ -128,20 +131,26 @@ while True:
                         jogadores.remove(eliminadoVotos)
                         print(f'a cidade eliminou {eliminadoVotos} com {quantidadeVotosEliminado} votos')
                         traidorNaPartida = False
-                
         if(assassinos > jogadoresExcetoAssassinos):
-            print(f'o assassino ({assassino}) venceu!')
-            jogarNovamente = input('jogar novamente? ')
+            if(partidaComecaComTraidor == True):
+                print(f'o assassino ({assassino}) e o traidor {traidor} venceram!')
+            elif(partidaComecaComTraidor == False):
+                print(f'o assassino {assassino} venceu!')
+            jogarNovamente = 'a'
+            while((jogarNovamente != 'sim') and (jogarNovamente != 'nao')):
+                jogarNovamente = input('jogar novamente? ')
+                if((jogarNovamente != 'sim') and (jogarNovamente != 'nao')):
+                    print('opção invalida.')
             if(jogarNovamente == 'sim'):
                 print('reiniciando...')
             elif(jogarNovamente == 'nao'):
                 break
         else:
-            print('o assassino foi eliminado')
+            print('o assassino foi eliminado, a cidade vence!')
             jogarNovamente = input('jogar novamente? ')
             if(jogarNovamente == 'sim'):
                 print('reiniciando...')
             elif(jogarNovamente == 'nao'):
                 break
     else:
-        print('Digite um número válido')
+        print('Digite um número válido.')
