@@ -108,5 +108,10 @@ while True:
                 break
         else:
             print('o assassino foi eliminado')
+            jogarNovamente = input('jogar novamente? ')
+            if(jogarNovamente == 'sim'):
+                print('reiniciando...')
+            elif(jogarNovamente == 'nao'):
+                break
     else:
         print('Digite um número válido')
