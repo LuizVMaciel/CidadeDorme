@@ -17,17 +17,26 @@ while True:
         print('todos jogadores foram registrados!')
         #atribuição de classes/cargos para os jogadores
         cidadaos = jogadores.copy()
-        jogadoresExcetoAssassino = jogadores.copy()
+        jogadoresExcetoAssassinos = jogadores.copy()
+        assassinos = []
         assassino = random.choice(cidadaos)
         cidadaos.remove(assassino)
-        jogadoresExcetoAssassino.remove(assassino)
+        jogadoresExcetoAssassinos.remove(assassino)
+        assassinos.append(assassino)
         detetive = random.choice(cidadaos)
         cidadaos.remove(detetive)
         anjo = random.choice(cidadaos)
         cidadaos.remove(anjo)
+        if(len(jogadores) > 4):
+            traidor = random.choice(cidadaos)
+            cidadaos.remove(traidor)
+            jogadoresExcetoAssassinos.remove(traidor)
+            assassinos.append(traidor)
+            traidorNaPartida = True
+            assassinoVivo = True
         print('classes atribuídas!')
         #programação das rodadas
-        while((len(jogadoresExcetoAssassino) > 1) and (assassino in jogadores)):
+        while((len(jogadoresExcetoAssassinos) > len(assassinos)) and (len(assassinos) > 0)):
             #programação noite (jogadores exercem suas classes)
             print('A cidade Dorme.')
             jogadoresNaPartida = len(jogadores)
@@ -69,6 +78,14 @@ while True:
                         jogadorTurno += 1
                     else:
                         print('escolha invalida')
+                elif(traidorNaPartida == True):
+                    if(jogadores[jogadorTurno] == traidor):
+                        if(assassinoVivo == True):
+                            input(f'vez de {jogadores[jogadorTurno]}, digite "ok" para começar seu turno: ')
+                            print('voce é o traidor e o assassino ainda está vivo, disfarce por um tempo e digite "passar" para terminar seu turno: ')
+                        elif(assassinoVivo == False):
+                            input(f'vez de {jogadores[jogadorTurno]}, digite "ok" para começar seu turno: ')
+                            input('você agora é o assassino, quem você quer matar? ')
             #programação dia (jogadores votam)
             print('a cidade acorda.')
             if(escolhaAnjo == escolhaAssassino):
@@ -76,7 +93,7 @@ while True:
             else:
                 print(f'{escolhaAssassino} foi assassinado')
                 jogadores.remove(escolhaAssassino)
-                jogadoresExcetoAssassino.remove(escolhaAssassino)
+                jogadoresExcetoAssassinos.remove(escolhaAssassino)
             input('digite "ok" para iniciar a votação: ')
             jogadoresNaPartida = len(jogadores)
             jogadorTurnoVoto = 0
@@ -96,10 +113,23 @@ while True:
                 eliminadoVotos = maisVotado[0][0]
                 quantidadeVotosEliminado = maisVotado[0][1]
                 jogadores.remove(eliminadoVotos)
-                if(eliminadoVotos in jogadoresExcetoAssassino):
-                    jogadoresExcetoAssassino.remove(eliminadoVotos)
-                    print(f'a cidade eliminou {eliminadoVotos}, com {quantidadeVotosEliminado} votos')
-        if(assassino in jogadores):
+                if(eliminadoVotos in jogadoresExcetoAssassinos):
+                    jogadoresExcetoAssassinos.remove(eliminadoVotos)
+                    print(f'a cidade eliminou {eliminadoVotos} com {quantidadeVotosEliminado} votos')
+                elif((eliminadoVotos in assassinos) and (len(assassinos) > 2)):
+                    if(eliminadoVotos == assassino):
+                        assassinos.remove(eliminadoVotos)
+                        jogadores.remove(eliminadoVotos)
+                        print(f'o assassino {eliminadoVotos} foi eliminado com {quantidadeVotosEliminado} votos')
+                        traidorNaPartida = False
+                        assassinoVivo = False
+                    elif(eliminadoVotos == traidor):
+                        assassinos.remove(eliminadoVotos)
+                        jogadores.remove(eliminadoVotos)
+                        print(f'a cidade eliminou {eliminadoVotos} com {quantidadeVotosEliminado} votos')
+                        traidorNaPartida = False
+                
+        if(assassinos > jogadoresExcetoAssassinos):
             print(f'o assassino ({assassino}) venceu!')
             jogarNovamente = input('jogar novamente? ')
             if(jogarNovamente == 'sim'):
