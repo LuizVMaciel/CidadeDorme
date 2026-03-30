@@ -81,7 +81,7 @@ while True:
                         jogadorTurno += 1
                     else:
                         print('escolha invalida')
-                elif(traidorNaPartida == True):
+                elif(partidaComecaComTraidor == True):
                     if(jogadores[jogadorTurno] == traidor):
                         if(assassinoVivo == True):
                             input(f'vez de {jogadores[jogadorTurno]}, digite "ok" para começar seu turno: ')
@@ -97,41 +97,42 @@ while True:
                 print(f'{escolhaAssassino} foi assassinado')
                 jogadores.remove(escolhaAssassino)
                 jogadoresExcetoAssassinos.remove(escolhaAssassino)
-            input('digite "ok" para iniciar a votação: ')
-            jogadoresNaPartida = len(jogadores)
-            jogadorTurnoVoto = 0
-            votos = []
-            while(jogadorTurnoVoto < jogadoresNaPartida):
-                voto = input(f'vez de {jogadores[jogadorTurnoVoto]}, em quem você vota? ')
-                if(voto in jogadores):
-                    jogadorTurnoVoto += 1
-                    votos.append(voto)
+            if((len(jogadoresExcetoAssassinos) > len(assassinos)) and (len(assassinos) > 0)):
+                input('digite "ok" para iniciar a votação: ')
+                jogadoresNaPartida = len(jogadores)
+                jogadorTurnoVoto = 0
+                votos = []
+                while(jogadorTurnoVoto < jogadoresNaPartida):
+                    voto = input(f'vez de {jogadores[jogadorTurnoVoto]}, em quem você vota? ')
+                    if(voto in jogadores):
+                        jogadorTurnoVoto += 1
+                        votos.append(voto)
+                    else:
+                        print('voto inválido')
+                maisVotado = Counter(votos).most_common(2)
+                #sistema de empate
+                if(maisVotado[0][1] == maisVotado[1][1]):
+                    print(f'houve um empate, {maisVotado[0][0]} e {maisVotado[1][0]} tiveram {maisVotado[1][1]} votos')
                 else:
-                    print('voto inválido')
-            maisVotado = Counter(votos).most_common(2)
-            #sistema de empate
-            if(maisVotado[0][1] == maisVotado[1][1]):
-                print(f'houve um empate, {maisVotado[0][0]} e {maisVotado[1][0]} tiveram {maisVotado[1][1]} votos')
-            else:
-                eliminadoVotos = maisVotado[0][0]
-                quantidadeVotosEliminado = maisVotado[0][1]
-                jogadores.remove(eliminadoVotos)
-                if(eliminadoVotos in jogadoresExcetoAssassinos):
-                    jogadoresExcetoAssassinos.remove(eliminadoVotos)
-                    print(f'a cidade eliminou {eliminadoVotos} com {quantidadeVotosEliminado} votos')
-                elif((eliminadoVotos in assassinos) and (len(assassinos) > 2)):
-                    if(eliminadoVotos == assassino):
-                        assassinos.remove(eliminadoVotos)
-                        jogadores.remove(eliminadoVotos)
-                        print(f'o assassino {eliminadoVotos} foi eliminado com {quantidadeVotosEliminado} votos')
-                        traidorNaPartida = False
-                        assassinoVivo = False
-                    elif(eliminadoVotos == traidor):
-                        assassinos.remove(eliminadoVotos)
-                        jogadores.remove(eliminadoVotos)
+                    eliminadoVotos = maisVotado[0][0]
+                    quantidadeVotosEliminado = maisVotado[0][1]
+                    jogadores.remove(eliminadoVotos)
+                    if(eliminadoVotos in jogadoresExcetoAssassinos):
+                        jogadoresExcetoAssassinos.remove(eliminadoVotos)
                         print(f'a cidade eliminou {eliminadoVotos} com {quantidadeVotosEliminado} votos')
-                        traidorNaPartida = False
-        if(assassinos > jogadoresExcetoAssassinos):
+                    elif((eliminadoVotos in assassinos) and (len(assassinos) == 2)):
+                        if(eliminadoVotos == assassino):
+                            assassinos.remove(eliminadoVotos)
+                            jogadores.remove(eliminadoVotos)
+                            print(f'o assassino {eliminadoVotos} foi eliminado com {quantidadeVotosEliminado} votos')
+                            traidorNaPartida = False
+                            assassinoVivo = False
+                        elif(eliminadoVotos == traidor):
+                            assassinos.remove(eliminadoVotos)
+                            jogadores.remove(eliminadoVotos)
+                            print(f'a cidade eliminou {eliminadoVotos} com {quantidadeVotosEliminado} votos')
+                            traidorNaPartida = False
+        if(len(assassinos) == len(jogadoresExcetoAssassinos)):
             if(partidaComecaComTraidor == True):
                 print(f'o assassino ({assassino}) e o traidor {traidor} venceram!')
             elif(partidaComecaComTraidor == False):
