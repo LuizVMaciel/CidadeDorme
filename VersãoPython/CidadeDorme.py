@@ -7,6 +7,7 @@ def LimparTela():
         os.system('cls')
     else:
         os.system('clear')
+
 while True:
     #Set da lista e inicialização do programa
     jogadores = []
@@ -46,8 +47,10 @@ while True:
             partidaComecaComTraidor = False
             traidorNaPartida = False
         print('classes atribuídas!')
+        rodada = 0
         #programação das rodadas
         while((len(jogadoresExcetoAssassinos) > len(assassinos)) and (len(assassinos) > 0)):
+            rodada += 1
             #programação noite (jogadores exercem suas classes)
             print('A cidade Dorme.\n')
             jogadoresNaPartida = len(jogadores)
@@ -77,12 +80,22 @@ while True:
                 elif(jogadores[jogadorTurno] == anjo):
                     input(f'vez de {jogadores[jogadorTurno]}, aperte a tecla "enter" para começar seu turno ')
                     escolhaAnjo = input('quem voce quer proteger? ')
-                    if(escolhaAnjo in jogadores):
-                        input('aperte a tecla "enter" para finalizar seu turno ')
-                        LimparTela()
-                        jogadorTurno += 1
+                    if(rodada == 1):
+                        if(escolhaAnjo in jogadores):
+                            escolhaAnteriorAnjo = escolhaAnjo
+                            input('aperte a tecla "enter" para finalizar seu turno ')
+                            LimparTela()
+                            jogadorTurno += 1
+                        else:
+                            print('escolha invalida')
                     else:
-                        print('escolha invalida')
+                        if((escolhaAnjo in jogadores) and (escolhaAnjo != escolhaAnteriorAnjo)):
+                             escolhaAnteriorAnjo = escolhaAnjo
+                             input('aperte a tecla "enter" para finalizar seu turno ')
+                             LimparTela()
+                             jogadorTurno += 1
+                        else:
+                            print('escolha invalida')
                 elif(jogadores[jogadorTurno] == assassino):
                     input(f'vez de {jogadores[jogadorTurno]}, aperte a tecla "enter" para começar seu turno ')
                     if((partidaComecaComTraidor == True) and (traidorNaPartida == True)):
@@ -167,14 +180,14 @@ while True:
                 if((jogarNovamente != 'sim') and (jogarNovamente != 'nao')):
                     print('opção invalida.')
             if(jogarNovamente == 'sim'):
-                print('reiniciando...')
+                LimparTela()
             elif(jogarNovamente == 'nao'):
                 break
         else:
             print('o assassino foi eliminado, a cidade vence!')
             jogarNovamente = input('jogar novamente? ')
             if(jogarNovamente == 'sim'):
-                print('reiniciando...')
+                LimparTela()
             elif(jogarNovamente == 'nao'):
                 break
     else:
