@@ -1,5 +1,12 @@
 import random
 from collections import Counter
+import os
+
+def LimparTela():
+    if(os.name == 'nt'):
+        os.system('cls')
+    else:
+        os.system('clear')
 while True:
     #Set da lista e inicialização do programa
     jogadores = []
@@ -49,7 +56,7 @@ while True:
                 if(jogadores[jogadorTurno] in cidadaos):
                     input(f'vez de {jogadores[jogadorTurno]}, aperte a tecla "enter" para começar seu turno ')
                     input('você é um cidadão, disfarce por um tempo e digite "passar" para terminar seu turno: ')
-                    print('\n' * 100)
+                    LimparTela()
                     jogadorTurno += 1
                 elif(jogadores[jogadorTurno] == detetive):
                     input(f'vez de {jogadores[jogadorTurno]}, aperte a tecla "enter" para começar seu turno ')
@@ -63,7 +70,7 @@ while True:
                         else:
                             print(f'{escolhaDetetive} não é o assassino')
                         input('aperte a tecla "enter" para finalizar seu turno ')
-                        print('\n' * 100)
+                        LimparTela()
                         jogadorTurno += 1
                     else:
                         print('escolha invalida')
@@ -72,7 +79,7 @@ while True:
                     escolhaAnjo = input('quem voce quer proteger? ')
                     if(escolhaAnjo in jogadores):
                         input('aperte a tecla "enter" para finalizar seu turno ')
-                        print('\n' * 100)
+                        LimparTela()
                         jogadorTurno += 1
                     else:
                         print('escolha invalida')
@@ -83,7 +90,7 @@ while True:
                     escolhaAssassino = input('quem você quer matar? ')
                     if(escolhaAssassino in jogadores):
                         input('aperte a tecla "enter" para finalizar seu turno ')
-                        print('\n' * 100)
+                        LimparTela()
                         jogadorTurno += 1
                     else:
                         print('escolha invalida')
@@ -92,14 +99,14 @@ while True:
                         if(assassinoVivo == True):
                             input(f'vez de {jogadores[jogadorTurno]}, aperte a tecla "enter" para começar seu turno ')
                             input(f'voce é o traidor e o assassino ({assassino}) ainda está vivo, disfarce por um tempo e digite "passar" para terminar seu turno: ')
-                            print('\n' * 100)
+                            LimparTela()
                             jogadorTurno += 1
                         elif(assassinoVivo == False):
                             input(f'vez de {jogadores[jogadorTurno]}, aperte a tecla "enter" para começar seu turno ')
                             escolhaAssassino = input('você agora é o assassino, quem você quer matar? ')
                             if(escolhaAssassino in jogadores):
                                 input('aperte a tecla "enter" para finalizar seu turno ')
-                                print('\n' * 100)
+                                LimparTela()
                                 jogadorTurno += 1
                             else:
                                 print('escolha invalida')
