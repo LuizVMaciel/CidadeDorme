@@ -55,6 +55,7 @@ while True:
             print('A cidade Dorme.\n')
             jogadoresNaPartida = len(jogadores)
             jogadorTurno = 0
+            escolhaAnjo = None
             while(jogadorTurno < jogadoresNaPartida):
                 if(jogadores[jogadorTurno] in cidadaos):
                     input(f'vez de {jogadores[jogadorTurno]}, aperte a tecla "enter" para começar seu turno ')
