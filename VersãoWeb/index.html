@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cidade Dorme</title>
     <link rel="stylesheet" href="./style.css">
-    <script src="./app.js"></script>
+    <script src="./app.js" defer></script>
 </head>
 <body>
     <header>
         <h1 id="textoPrincipal"></h1>
     </header>
     <main>
-        <h2 id="TextoSecundario"></h2>
-        <p id="paragrafo"></p>
-        <input type="text" id="entrada">
-        <button id="botao"></button>
+        <div class="textosSecundarios">
+            <h2 id="textoSecundario"></h2>
+            <p class="paragrafo" id="paragrafo"></p>
+        </div>
+        <div class="interagiveis">
+            <input type="text" id="entrada">
+            <button id="botaoAdicionar"></button>
+            <button class="botao" id="botao"></button>
+        </div>
     </main>
     <footer>
         <p>por: Luiz Eduardo</p>
