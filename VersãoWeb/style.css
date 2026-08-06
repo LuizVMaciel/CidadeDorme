@@ -119,3 +119,23 @@ button:active {
     border-color: #ffcc9f;
     transition: 2ms;
 }
+
+@media (min-width: 450px) {
+    header, main , footer{
+        display: none;
+    }
+    .aviso {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 3rem;
+    }
+}
+@media (max-width: 450px){
+    .aviso{
+        display: none;
+    }
+}
